@@ -24,6 +24,16 @@ class EndConditionTests(unittest.TestCase):
         self.assertEqual(state.winner_ids, [2, 4])
         self.assertEqual(state.terminal_reason, "bankruptcy")
 
+    def test_terminal_event_is_recorded_once(self):
+        state = setup_game(6, seed=1)
+        state.player(3).coins = 13
+
+        check_terminal_state(state)
+        check_terminal_state(state)
+
+        terminal_events = [event for event in state.history if event["kind"] == "terminal"]
+        self.assertEqual(len(terminal_events), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,9 +14,17 @@ The first implementation is intentionally small:
 ## Quick Start
 
 ```bash
-PYTHONPATH=src python3 -m unittest discover
-python3 -m mascarade_sim single --players 6 --seed 1 --verbose
-python3 -m mascarade_sim run --players 6 --games 1000 --seed 42
+PYTHONPATH=src python3 -m unittest discover -s tests
+PYTHONPATH=src python3 -m mascarade_sim single --players 6 --seed 1 --verbose
+PYTHONPATH=src python3 -m mascarade_sim run --players 6 --games 1000 --seed 42
+```
+
+Or use the repo shortcuts:
+
+```bash
+make test
+make single
+make simulate
 ```
 
 ## Ontology

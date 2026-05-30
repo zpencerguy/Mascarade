@@ -185,21 +185,21 @@ def resolve_character_power(
 
 def check_terminal_state(state: GameState) -> list[int] | None:
     if state.winner_ids is not None:
-        state.record(EventKind.TERMINAL, reason=state.terminal_reason, winner_ids=state.winner_ids)
+        _record_terminal_once(state)
         return state.winner_ids
 
     thirteen_plus = [player.id for player in state.players if player.coins >= 13]
     if thirteen_plus:
         state.winner_ids = thirteen_plus
         state.terminal_reason = "thirteen_gold"
-        state.record(EventKind.TERMINAL, reason=state.terminal_reason, winner_ids=state.winner_ids)
+        _record_terminal_once(state)
         return state.winner_ids
 
     if any(player.coins <= 0 for player in state.players):
         richest = max(player.coins for player in state.players)
         state.winner_ids = [player.id for player in state.players if player.coins == richest]
         state.terminal_reason = "bankruptcy"
-        state.record(EventKind.TERMINAL, reason=state.terminal_reason, winner_ids=state.winner_ids)
+        _record_terminal_once(state)
         return state.winner_ids
 
     return None
@@ -268,3 +268,8 @@ def _advance_turn(state: GameState) -> None:
         return
     state.turn_number += 1
     state.turn_index = (state.turn_index + 1) % len(state.players)
+
+
+def _record_terminal_once(state: GameState) -> None:
+    if not state.history or state.history[-1]["kind"] != EventKind.TERMINAL.value:
+        state.record(EventKind.TERMINAL, reason=state.terminal_reason, winner_ids=state.winner_ids)
