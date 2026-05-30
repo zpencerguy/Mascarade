@@ -98,6 +98,14 @@ def _validate_references(ontology: Ontology) -> None:
         names = [*setup.characters, *setup.middle_cards]
         if "Judge" not in names:
             raise ValueError(f"{setup.players}-player setup must include Judge")
+        if len(names) < setup.players:
+            raise ValueError(f"{setup.players}-player setup has fewer cards than players")
+        if setup.players in {4, 5} and len(names) != 6:
+            raise ValueError(f"{setup.players}-player setup must use 6 character cards")
+        if setup.players >= 6 and len(names) != setup.players:
+            raise ValueError(f"{setup.players}-player setup must use exactly {setup.players} character cards")
+        if names.count("Peasant") not in {0, 2}:
+            raise ValueError(f"{setup.players}-player setup must include both Peasants or neither")
         unknown = sorted({name for name in names if name not in ontology.characters})
         if unknown:
             raise ValueError(f"{setup.players}-player setup references unknown characters: {unknown}")

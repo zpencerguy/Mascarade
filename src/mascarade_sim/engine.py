@@ -20,25 +20,25 @@ def setup_game(
 
     ontology = ontology or load_ontology()
     setup = ontology.setup_for(player_count)
-    player_cards = list(characters or setup.characters)
-    middle_cards = list(setup.middle_cards if characters is None else [])
-    if len(player_cards) != player_count:
-        raise ValueError(f"Expected {player_count} player cards, got {len(player_cards)}")
-    if "Judge" not in [*player_cards, *middle_cards]:
+    setup_deck = list(characters or setup.characters)
+    if len(setup_deck) < player_count:
+        raise ValueError(f"Expected at least {player_count} setup cards, got {len(setup_deck)}")
+    if "Judge" not in setup_deck:
         raise ValueError("Judge must always be in play")
 
     rng = random.Random(seed)
-    shuffled = [*player_cards, *middle_cards]
+    shuffled = list(setup_deck)
     rng.shuffle(shuffled)
 
     positions = [CardPosition(id=f"player:{idx}", owner_player_id=idx) for idx in range(player_count)]
-    positions.extend(CardPosition(id=f"middle:{idx}", is_middle=True) for idx in range(len(middle_cards)))
+    middle_count = len(setup_deck) - player_count
+    positions.extend(CardPosition(id=f"middle:{idx}", is_middle=True) for idx in range(middle_count))
     card_by_position = {position.id: shuffled[idx] for idx, position in enumerate(positions)}
     state = GameState(
         players=[Player(id=idx) for idx in range(player_count)],
         positions=positions,
         card_by_position=card_by_position,
-        character_set=player_cards,
+        character_set=setup_deck,
     )
     state.record(EventKind.SETUP, player_count=player_count, positions=[position.id for position in positions])
     return state

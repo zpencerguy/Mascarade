@@ -39,8 +39,13 @@ The dynamic project knowledge lives in `config/ontology.json`. It defines:
 The engine validates the ontology at load time and dispatches character powers
 through the registry in `mascarade_sim.characters`.
 
-## Known Rulebook Gaps
+## Rulebook Source
 
-The exact official basic character configuration for every player count still
-needs verification from the physical rulebook table. The default config is
-editable and currently uses a conservative development setup for 6 players.
+The basic 4 to 13 player configuration table has been transcribed from the
+uploaded Repos rulebook photo into `docs/rulebook_transcription.md` and locked
+with tests. In `config/ontology.json`, each setup's `characters` list is the
+full setup deck. For 4 and 5 players, cards beyond the player count are dealt
+to middle-table positions.
+
+The 2 and 3 player expert variants are documented in the uploaded rulebook
+photos but are not implemented in the engine yet.
