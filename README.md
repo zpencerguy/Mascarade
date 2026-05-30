@@ -11,6 +11,8 @@ The first implementation is intentionally small:
 - a random bot and CLI for smoke-running games;
 - focused tests for challenge resolution, character powers, setup, and end states.
 
+![Animated Mascarade game visualization](docs/assets/mascarade_visualization_preview.png)
+
 ## Quick Start
 
 ```bash
