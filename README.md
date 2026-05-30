@@ -25,6 +25,7 @@ Or use the repo shortcuts:
 make test
 make single
 make simulate
+make experiment
 ```
 
 ## Ontology

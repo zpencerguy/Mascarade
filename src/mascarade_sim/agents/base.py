@@ -14,3 +14,7 @@ class Agent(ABC):
     @abstractmethod
     def choose_action(self, state: GameState, ontology: Ontology) -> Action:
         """Choose one legal action for the current active player."""
+
+    def choose_challenge(self, state: GameState, actor_id: int, character: str) -> bool:
+        """Decide whether this agent contests another player's character claim."""
+        return False

@@ -40,18 +40,15 @@ class RandomBot(Agent):
             return Action(kind=kind, actor_id=actor_id)
 
         character = self.rng.choice(legal_characters)
-        challengers = [
-            player.id
-            for player in state.players
-            if player.id != actor_id and self.rng.random() < self.challenge_probability
-        ]
         return Action(
             kind=ActionKind.ANNOUNCE,
             actor_id=actor_id,
             character=character,
-            challengers=challengers,
             context=self._power_context(state, actor_id, character),
         )
+
+    def choose_challenge(self, state: GameState, actor_id: int, character: str) -> bool:
+        return self.rng.random() < self.challenge_probability
 
     def _power_context(self, state: GameState, actor_id: int, character: str) -> dict:
         other_players = [player.id for player in state.players if player.id != actor_id]
