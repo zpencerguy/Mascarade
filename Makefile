@@ -1,4 +1,4 @@
-.PHONY: test single simulate verbose experiment
+.PHONY: test single simulate verbose experiment visualize
 
 test:
 	PYTHONPATH=src python3 -m unittest discover -s tests
@@ -14,3 +14,6 @@ simulate:
 
 experiment:
 	PYTHONPATH=src python3 -m mascarade_sim experiment --seats early_bluffer random random random --games 1000 --seed 42 --rotate-seats
+
+visualize:
+	PYTHONPATH=src python3 -m mascarade_sim visualize --players 4 --seed 42 --out visualizations/game_4p_seed42.html

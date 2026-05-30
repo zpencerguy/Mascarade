@@ -26,7 +26,11 @@ make test
 make single
 make simulate
 make experiment
+make visualize
 ```
+
+`make visualize` writes a standalone animated HTML replay to
+`visualizations/game_4p_seed42.html`.
 
 ## Ontology
 

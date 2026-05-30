@@ -5,6 +5,7 @@ import json
 
 from mascarade_sim.agents import STRATEGIES
 from mascarade_sim.simulation import play_random_game, play_strategy_game, run_random_games, run_strategy_lineup
+from mascarade_sim.visualization import DEFAULT_VISUALIZATION_PATH, write_game_visualization
 
 
 def main() -> None:
@@ -28,11 +29,25 @@ def main() -> None:
     experiment.add_argument("--verbose", action="store_true")
     experiment.add_argument("--rotate-seats", action="store_true", help="Rotate the listed strategies through seats across games")
 
+    visualize = subparsers.add_parser("visualize", help="Write a standalone animated HTML game visualization")
+    visualize.add_argument("--players", type=int, default=4)
+    visualize.add_argument("--seed", type=int, default=42)
+    visualize.add_argument("--seats", nargs="+", help=f"Optional strategy per seat. Options: {', '.join(sorted(STRATEGIES))}")
+    visualize.add_argument("--out", default=str(DEFAULT_VISUALIZATION_PATH))
+
     args = parser.parse_args()
     if args.command == "single":
         result = play_random_game(args.players, seed=args.seed, verbose=args.verbose)
     elif args.command == "run":
         result = run_random_games(args.players, args.games, seed=args.seed)
+    elif args.command == "visualize":
+        path = write_game_visualization(
+            output_path=args.out,
+            player_count=args.players,
+            seed=args.seed,
+            strategy_names=args.seats,
+        )
+        result = {"visualization": str(path)}
     elif args.games == 1:
         result = play_strategy_game(args.seats, seed=args.seed, verbose=args.verbose)
     else:
