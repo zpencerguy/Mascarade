@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "schemas": {
+    "character": {
+      "required": ["name", "min_players", "handler"],
+      "properties": {
+        "name": "string",
+        "count": "integer",
+        "min_players": "integer",
+        "mandatory": "boolean",
+        "handler": "string",
+        "tags": "list[string]"
+      }
+    },
+    "setup": {
+      "required": ["players", "characters"],
+      "properties": {
+        "players": "integer",
+        "characters": "list[string]",
+        "middle_cards": "list[string]"
+      }
+    }
+  },
+  "characters": [
+    {"name": "Judge", "count": 1, "min_players": 4, "mandatory": true, "handler": "judge", "tags": ["money", "courthouse"]},
+    {"name": "Bishop", "count": 1, "min_players": 4, "mandatory": false, "handler": "bishop", "tags": ["money", "target"]},
+    {"name": "King", "count": 1, "min_players": 4, "mandatory": false, "handler": "king", "tags": ["money", "bank"]},
+    {"name": "Queen", "count": 1, "min_players": 4, "mandatory": false, "handler": "queen", "tags": ["money", "bank"]},
+    {"name": "Fool", "count": 1, "min_players": 4, "mandatory": false, "handler": "fool", "tags": ["money", "swap"]},
+    {"name": "Thief", "count": 1, "min_players": 4, "mandatory": false, "handler": "thief", "tags": ["money", "neighbors"]},
+    {"name": "Witch", "count": 1, "min_players": 4, "mandatory": false, "handler": "witch", "tags": ["money", "target"]},
+    {"name": "Spy", "count": 1, "min_players": 4, "mandatory": false, "handler": "spy", "tags": ["knowledge", "swap"]},
+    {"name": "Peasant", "count": 2, "min_players": 8, "mandatory": false, "handler": "peasant", "tags": ["money", "paired"]},
+    {"name": "Cheat", "count": 1, "min_players": 4, "mandatory": false, "handler": "cheat", "tags": ["terminal"]},
+    {"name": "Inquisitor", "count": 1, "min_players": 8, "mandatory": false, "handler": "inquisitor", "tags": ["knowledge", "target"]},
+    {"name": "Widow", "count": 1, "min_players": 4, "mandatory": false, "handler": "widow", "tags": ["money", "bank"]}
+  ],
+  "setups": [
+    {"players": 4, "characters": ["Judge", "Bishop", "King", "Queen", "Cheat"], "middle_cards": ["Witch"]},
+    {"players": 5, "characters": ["Judge", "Bishop", "King", "Queen", "Witch"], "middle_cards": ["Cheat"]},
+    {"players": 6, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat"], "middle_cards": []},
+    {"players": 7, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief"], "middle_cards": []},
+    {"players": 8, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief", "Peasant"], "middle_cards": ["Peasant"]},
+    {"players": 9, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief", "Peasant", "Peasant"], "middle_cards": []},
+    {"players": 10, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief", "Spy", "Peasant", "Peasant"], "middle_cards": []},
+    {"players": 11, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief", "Spy", "Widow", "Peasant", "Peasant"], "middle_cards": []},
+    {"players": 12, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief", "Spy", "Widow", "Inquisitor", "Peasant", "Peasant"], "middle_cards": []},
+    {"players": 13, "characters": ["Judge", "Bishop", "King", "Queen", "Witch", "Cheat", "Thief", "Spy", "Widow", "Inquisitor", "Fool", "Peasant", "Peasant"], "middle_cards": []}
+  ]
+}
